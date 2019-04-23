@@ -1,4 +1,4 @@
-package com.iotblue.weatherapp.data.network.googleapi;
+package com.iotblue.weatherapp.data.network.openwheatherapi;
 
 
 import com.iotblue.weatherapp.data.domain.entities.WeatherDetailsResponse;

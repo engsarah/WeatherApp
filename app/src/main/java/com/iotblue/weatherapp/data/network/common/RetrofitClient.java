@@ -1,7 +1,7 @@
 package com.iotblue.weatherapp.data.network.common;
 
-import com.iotblue.weatherapp.data.network.googleapi.OpenWeatherMapAPI;
 import com.iotblue.weatherapp.data.network.interceptors.OpenWeatherMapAPIRequestInterceptor;
+import com.iotblue.weatherapp.data.network.openwheatherapi.OpenWeatherMapAPI;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;

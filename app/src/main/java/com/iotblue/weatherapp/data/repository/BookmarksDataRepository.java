@@ -1,4 +1,4 @@
 package com.iotblue.weatherapp.data.repository;
 
-public class BookmarksDataRepository {
+public class BookmarksDataRepository implements BookmarksRepository {
 }

@@ -1,4 +1,4 @@
-package com.iotblue.weatherapp.data.network.googleapi;
+package com.iotblue.weatherapp.data.network.openwheatherapi;
 
 import android.util.Log;
 

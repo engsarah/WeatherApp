@@ -1,6 +1,6 @@
 package com.iotblue.weatherapp.data.repository;
 
-import com.iotblue.weatherapp.data.network.googleapi.OpenWeatherMapService;
+import com.iotblue.weatherapp.data.network.openwheatherapi.OpenWeatherMapService;
 
 public class LocationDataRepository {
 

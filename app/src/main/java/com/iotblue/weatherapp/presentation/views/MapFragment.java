@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -25,6 +24,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.iotblue.weatherapp.R;
+import com.iotblue.weatherapp.data.repository.LocationDataRepository;
 import com.iotblue.weatherapp.presentation.viewmodels.LocationViewModel;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
@@ -165,6 +165,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                         map.addMarker(new MarkerOptions().position(sydney)
                                 .title("Marker in Sydney"));
                         map.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+                        new LocationDataRepository().addLocationInDB();
 
 //                        if (location != null) {
 //                            // Logic to handle location object
@@ -183,6 +184,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     private void moveCamera(LatLng latLng, float zoom, GoogleMap map) {
         Log.d(TAG, "moveCamera: moving the camera to: lat: " + latLng.latitude + ", lng: " + latLng.longitude);
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
+
     }
 
 

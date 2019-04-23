@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.iotblue.weatherapp.R;
 import com.iotblue.weatherapp.presentation.viewmodels.BookMarksViewModel;
@@ -30,7 +29,7 @@ public class BookmarksFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(BookMarksViewModel.class);
+        //mViewModel = ViewModelProviders.of(this).get(BookMarksViewModel.class);
         // TODO: Use the ViewModel
     }
 

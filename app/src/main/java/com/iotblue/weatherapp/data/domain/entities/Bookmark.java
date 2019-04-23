@@ -26,6 +26,7 @@ public class Bookmark {
     private String rainLastHour;
     private String rainLastThreeHours;
     private String clouds;
+    private String networkErrors;
 
     public int getId() {
         return id;
@@ -145,5 +146,13 @@ public class Bookmark {
 
     public void setClouds(String clouds) {
         this.clouds = clouds;
+    }
+
+    public String getNetworkErrors() {
+        return networkErrors;
+    }
+
+    public void setNetworkErrors(String networkErrors) {
+        this.networkErrors = networkErrors;
     }
 }

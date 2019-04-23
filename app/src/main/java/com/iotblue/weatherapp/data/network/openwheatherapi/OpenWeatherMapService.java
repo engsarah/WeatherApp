@@ -1,9 +1,9 @@
 package com.iotblue.weatherapp.data.network.openwheatherapi;
 
-import android.util.Log;
-
+import com.iotblue.weatherapp.data.domain.entities.Bookmark;
 import com.iotblue.weatherapp.data.domain.entities.WeatherDetailsResponse;
 import com.iotblue.weatherapp.data.network.common.RetrofitClient;
+import com.iotblue.weatherapp.data.repository.OnBackendCallFinished;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -12,18 +12,25 @@ import retrofit2.Response;
 public class OpenWeatherMapService {
 
 
-    public void getWeatherDetails(String latitude, String longitude) {
+    public void getWeatherDetails(String latitude, String longitude, final OnBackendCallFinished onBackendCallFinished) {
 
         RetrofitClient.getInstance().getGoogleAPI().getWeatherDetails(latitude, longitude).enqueue(new Callback<WeatherDetailsResponse>() {
             @Override
             public void onResponse(Call<WeatherDetailsResponse> call, Response<WeatherDetailsResponse> response) {
 
-                if (response.isSuccessful() && response.body() != null) {
 
-                    Log.d("eee", "eee");
+                if (response.isSuccessful() && response.body() != null) {
+                    WeatherDetailsResponse data = response.body();
+                    Bookmark bookmark = new Bookmark();
+                    bookmark.setCityName(data.getName());
+                    bookmark.setCityId(String.valueOf(data.getId()));
+                    bookmark.setCountryCode(String.valueOf(data.getCod()));
+                    bookmark.setIcon(data.getWeather().get(0).getIcon());
+                    onBackendCallFinished.onSuccess(bookmark);
                 } else {
 
-                    Log.d("eee", "eee");
+                    onBackendCallFinished.onError("Error while fetching data");
+
                 }
             }
 
@@ -34,22 +41,5 @@ public class OpenWeatherMapService {
         });
     }
 
-    public void AddLocationToDB() {
 
-    }
-
-//    private static class addAsyncTask extends AsyncTask<String, Void, Void>{
-//
-////        private AppDatabase db;
-////
-////        addAsyncTask(AppDatabase appDatabase){
-////            db = appDatabase;
-////        }
-////
-////        @Override
-////        protected Void doInBackground(BorrowModel... borrowModels) {
-////            db.itemAndPersonModel().addBorrow(borrowModels[0]);
-////            return null;
-////        }
-//    }
 }

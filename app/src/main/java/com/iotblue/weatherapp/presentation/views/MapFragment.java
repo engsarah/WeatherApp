@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -24,16 +25,15 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.iotblue.weatherapp.R;
-import com.iotblue.weatherapp.data.repository.LocationDataRepository;
-import com.iotblue.weatherapp.presentation.viewmodels.LocationViewModel;
+import com.iotblue.weatherapp.presentation.viewmodels.AddBookmarkViewModel;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 import static com.iotblue.weatherapp.presentation.util.Constants.MAPVIEW_BUNDLE_KEY;
 
 public class MapFragment extends Fragment implements OnMapReadyCallback {
 
+    private AddBookmarkViewModel mAddBookmarkViewModel;
     private MapView mMapView;
-    private LocationViewModel mViewModel;
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
     private static final String COURSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
@@ -165,8 +165,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                         map.addMarker(new MarkerOptions().position(sydney)
                                 .title("Marker in Sydney"));
                         map.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-                        new LocationDataRepository().addLocationInDB();
-
+                        //new BookmarksDataRepository(getContext()).saveBookmark("-33.852", "151.211");
+                        mAddBookmarkViewModel = ViewModelProviders.of(getActivity()).get(AddBookmarkViewModel.class);
+                        mAddBookmarkViewModel.saveBookmarkedLocation("-33.852", "151.211");
 //                        if (location != null) {
 //                            // Logic to handle location object
 //                            moveCamera(new LatLng(location.getLatitude(), location.getLongitude()),

@@ -25,7 +25,21 @@ dependencies {
     implementation 'com.google.android.material:material:1.1.0-alpha05'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0-alpha04'
+
+    //Google maps dependency
+    implementation 'com.google.maps.android:android-maps-utils:0.5+'
+    implementation 'com.google.android.gms:play-services-maps:16.0.0'
+    implementation "com.google.android.gms:play-services-location:16.0.0"
+
+    //Retrofit dependencies
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
+    //OkHttp dependencies
+    implementation 'com.squareup.okhttp3:okhttp:3.12.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.11.0'
+
     testImplementation 'junit:junit:4.12'
+
     androidTestImplementation 'androidx.test:runner:1.2.0-alpha04'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0-alpha04'
 }

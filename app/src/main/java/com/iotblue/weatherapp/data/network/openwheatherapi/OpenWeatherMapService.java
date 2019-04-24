@@ -26,6 +26,8 @@ public class OpenWeatherMapService {
                     bookmark.setCityId(String.valueOf(data.getId()));
                     bookmark.setCountryCode(String.valueOf(data.getCod()));
                     bookmark.setIcon(data.getWeather().get(0).getIcon());
+                    bookmark.setMaxTemperature(String.valueOf(data.getMain().getTempMax()));
+                    bookmark.setDate(String.valueOf(data.getDt()));
                     onBackendCallFinished.onSuccess(bookmark);
                 } else {
 

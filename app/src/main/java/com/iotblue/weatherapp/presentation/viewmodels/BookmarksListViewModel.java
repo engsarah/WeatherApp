@@ -4,28 +4,28 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.LiveData;
 
+import com.iotblue.weatherapp.data.domain.entities.Bookmark;
 import com.iotblue.weatherapp.data.repository.BookmarksDataRepository;
 import com.iotblue.weatherapp.data.repository.BookmarksRepository;
 
-public class AddBookmarkViewModel extends AndroidViewModel {
+import java.util.List;
 
 
-    private MutableLiveData<Boolean> isLocationAdded;
+public class BookmarksListViewModel extends AndroidViewModel {
+
     private BookmarksRepository bookmarksRepository;
 
-    public AddBookmarkViewModel(@NonNull Application application) {
+
+    public BookmarksListViewModel(@NonNull Application application) {
         super(application);
         bookmarksRepository = new BookmarksDataRepository(application.getApplicationContext());
     }
 
-    public void saveBookmarkedLocation(String lat, String lon) {
-        bookmarksRepository.saveBookmark(lat, lon);
+    public LiveData<List<Bookmark>> getAllBookmarks() {
+        return bookmarksRepository.getAllBookmarks();
     }
 
-    public MutableLiveData<Boolean> getIsLocationAdded() {
-        return isLocationAdded;
-    }
 
 }

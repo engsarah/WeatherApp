@@ -8,9 +8,9 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 import com.iotblue.weatherapp.presentation.adapters.ViewPagerAdapter;
-import com.iotblue.weatherapp.presentation.views.BookmarksFragment;
+import com.iotblue.weatherapp.presentation.views.BookmarkDetailsFragment;
+import com.iotblue.weatherapp.presentation.views.BookmarksListFragment;
 import com.iotblue.weatherapp.presentation.views.MapFragment;
-import com.iotblue.weatherapp.presentation.views.WeatherForecastFragment;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -33,12 +33,10 @@ public class HomeActivity extends AppCompatActivity {
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new MapFragment(), "ONE");
-        adapter.addFragment(new BookmarksFragment(), "TWO");
-        adapter.addFragment(new WeatherForecastFragment(), "THREE");
+        adapter.addFragment(new BookmarksListFragment(), "TWO");
+        adapter.addFragment(new BookmarkDetailsFragment(), "THREE");
         viewPager.setAdapter(adapter);
     }
 
-    private void initToolbar() {
 
-    }
 }

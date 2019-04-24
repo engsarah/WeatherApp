@@ -27,20 +27,20 @@ public class BookmarksDataRepository implements BookmarksRepository, ReverseGeoc
     public void saveBookmark(String latlng) {
 
         new GoogleReverseGeocodeService().getLocationAddress(latlng, this);
-////        Bookmark b0 = new Bookmark();
-////        b0.setId(1);
-////        b0.setLat(40.714224);
-////        b0.setLng(-73.961452);
-////        b0.setAddress("277 Bedford Avenue, Brooklyn, NY 11211, USA");
-////        onSuccess(b0);
-////        Bookmark b01 = new Bookmark();
-////        b01.setId(2);
-////        b01.setLat(40.714224);
-////        b01.setLng(-73.961452);
-////        b01.setAddress("277 Bedford Avenue, Brooklyn, NY 11211, USA");
-////        onSuccess(b01);
+//        Bookmark b0 = new Bookmark();
+//        b0.setId(1);
+//        b0.setLat(40.714224);
+//        b0.setLng(-73.961452);
+//        b0.setAddress("277 Bedford Avenue, Brooklyn, NY 11211, USA");
+//        onSuccess(b0);
+//        Bookmark b01 = new Bookmark();
+//        b01.setId(2);
+//        b01.setLat(40.714224);
+//        b01.setLng(-73.961452);
+//        b01.setAddress("277 Bedford Avenue, Brooklyn, NY 11211, USA");
+//        onSuccess(b01);
 //        Bookmark b02 = new Bookmark();
-//        b02.setId(3);
+//        b02.setId(5);
 //        b02.setLat(40.714224);
 //        b02.setLng(-73.961452);
 //        b02.setAddress("277 Bedford Avenue, Brooklyn, NY 11211, USA");

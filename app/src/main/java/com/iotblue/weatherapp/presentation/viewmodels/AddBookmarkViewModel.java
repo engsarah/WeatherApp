@@ -11,7 +11,6 @@ import com.iotblue.weatherapp.data.repository.BookmarksRepository;
 
 public class AddBookmarkViewModel extends AndroidViewModel {
 
-
     private MutableLiveData<Boolean> isLocationAdded;
     private BookmarksRepository bookmarksRepository;
 
@@ -21,6 +20,7 @@ public class AddBookmarkViewModel extends AndroidViewModel {
     }
 
     public void saveBookmarkedLocation(String latlng) {
+
         bookmarksRepository.saveBookmark(latlng);
     }
 

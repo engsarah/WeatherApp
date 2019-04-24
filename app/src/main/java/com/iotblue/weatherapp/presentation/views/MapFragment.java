@@ -74,18 +74,18 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mAddBookmarkViewModel = ViewModelProviders.of(getActivity()).get(AddBookmarkViewModel.class);
-
-//        mAddBookmarkViewModel.getIsLocationAdded().observe(getActivity(), new Observer<Boolean>() {
+//
+//        mAddBookmarkViewModel.getIsLocationAdded().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
 //            @Override
 //            public void onChanged(Boolean isLocationAddedFlag) {
 //
 //                if(isLocationAddedFlag)
 //                {
-//                    Toast.makeText(getActivity(), "kkkkk", Toast.LENGTH_LONG).show();
+//                    Toast.makeText(getActivity(), "Bookmark saved successfully", Toast.LENGTH_LONG).show();
 //                }
 //                else
 //                {
-//
+//                    Toast.makeText(getActivity(), "Something went wrong while saving bookmark", Toast.LENGTH_LONG).show();
 //                }
 //            }
 //        });
@@ -124,12 +124,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setMessage(R.string.confirm_msg)
-                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                        .setNegativeButton(R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 mAddBookmarkViewModel.saveBookmarkedLocation(lat + "," + lon);
                             }
                         })
-                        .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                        .setPositiveButton(R.string.no, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
 
                                 map.clear();

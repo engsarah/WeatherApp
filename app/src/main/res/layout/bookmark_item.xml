@@ -4,6 +4,8 @@
     android:id="@+id/view_foreground"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    android:padding="15dp"
     android:background="@drawable/round_corners_bookmark_item">
 
     <TextView

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,6 +33,7 @@ public class BookmarkDetailsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.weather_forecast_fragment, container, false);
+
         //lat = getArguments().getString("lat");
         //lng = getArguments().getString("lng");
         return view;
@@ -44,25 +46,30 @@ public class BookmarkDetailsFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        sharedViewModel = ViewModelProviders.of(getActivity()).get(SharedViewModel.class);
         mViewModel = ViewModelProviders.of(this).get(WeatherDataViewModel.class);
-
-        sharedViewModel.getSelected().observe(this, new Observer<Bookmark>() {
+        sharedViewModel = ViewModelProviders.of(getActivity()).get(SharedViewModel.class);
+        sharedViewModel.getSelected().observe(getViewLifecycleOwner(), new Observer<Bookmark>() {
             @Override
             public void onChanged(Bookmark bookmark) {
                 lat = String.valueOf(bookmark.getLat());
                 lng = String.valueOf(bookmark.getLng());
+                mViewModel.getWeatherDataForLocation(lat, lng).observe(getViewLifecycleOwner(), new Observer<WeatherDetailsResponse>() {
+                    @Override
+                    public void onChanged(WeatherDetailsResponse weatherDetailsResponse) {
+
+                        Toast.makeText(getContext(), weatherDetailsResponse.getName(), Toast.LENGTH_LONG).show();
+                    }
+                });
+
             }
         });
 
-        mViewModel.getWeatherDataForLocation(lat, lng).observe(this, new Observer<WeatherDetailsResponse>() {
-            @Override
-            public void onChanged(WeatherDetailsResponse weatherDetailsResponse) {
-
-                //populate UI Data
-            }
-        });
 
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
 }

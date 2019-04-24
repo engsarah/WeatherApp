@@ -82,19 +82,6 @@ public class BookmarksListFragment extends Fragment implements IOnItemClickListe
     public void onItemClick(View view, int position, Bookmark bookmark) {
 
         sharedViewModel.select(bookmark);
-//        Bundle bundle = new Bundle();
-//        bundle.putString("lat",String.valueOf(bookmark.getLat()));
-//        bundle.putString("lng",String.valueOf(bookmark.getLat()));
-
-//        BookmarkDetailsFragment fragment = BookmarkDetailsFragment.newInstance();
-////        fragment.setArguments(bundle);
-//
-//        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//        fragmentTransaction.replace(R.id.viewpager, fragment);
-//        //fragmentTransaction.addToBackStack(null);
-//
-//        fragmentTransaction.commit();
         mListener.onFragmentCallback();
 
 

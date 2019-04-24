@@ -40,6 +40,9 @@ public class WeatherDetailsResponse {
     @SerializedName("wind")
     private Wind wind;
 
+    @SerializedName("rain")
+    private Rain rain;
+
     public int getDt() {
         return dt;
     }
@@ -128,4 +131,11 @@ public class WeatherDetailsResponse {
         this.wind = wind;
     }
 
+    public Rain getRain() {
+        return rain;
+    }
+
+    public void setRain(Rain rain) {
+        this.rain = rain;
+    }
 }

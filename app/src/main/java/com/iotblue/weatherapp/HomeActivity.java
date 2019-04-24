@@ -31,9 +31,9 @@ public class HomeActivity extends AppCompatActivity implements BookmarksListFrag
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new MapFragment(), "ONE");
-        adapter.addFragment(new BookmarksListFragment(), "TWO");
-        adapter.addFragment(new BookmarkDetailsFragment(), "THREE");
+        adapter.addFragment(new MapFragment(), "Locator");
+        adapter.addFragment(new BookmarksListFragment(), "Bookmarks");
+        adapter.addFragment(new BookmarkDetailsFragment(), "Forecast");
         viewPager.setAdapter(adapter);
     }
 

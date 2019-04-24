@@ -32,6 +32,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.iotblue.weatherapp.R;
 import com.iotblue.weatherapp.presentation.util.Constants;
@@ -92,7 +93,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     @SuppressLint("MissingPermission")
     @Override
-    public void onMapReady(GoogleMap map) {
+    public void onMapReady(final GoogleMap map) {
         if (checkMapServices()) {
             if (mLocationPermissionsGranted) {
                 map.setMyLocationEnabled(true);
@@ -105,12 +106,39 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         map.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
             @Override
             public void onMapLongClick(LatLng latLng) {
-                String lat = String.valueOf(latLng.latitude);
-                String lon = String.valueOf(latLng.longitude);
-                //moveCamera(new LatLng(LatLng, location.getLongitude()),
-                //b      Constants.DEFAULT_ZOOM, map);
+                final String lat = String.valueOf(latLng.latitude);
+                final String lon = String.valueOf(latLng.longitude);
+                map.clear();
 
-                mAddBookmarkViewModel.saveBookmarkedLocation(lat + "," + lon);
+                MarkerOptions mp = new MarkerOptions();
+
+                mp.position(new LatLng(latLng.latitude, latLng.longitude));
+
+                //mp.title("my position");
+
+                map.addMarker(mp);
+
+                map.animateCamera(CameraUpdateFactory.newLatLngZoom(
+                        new LatLng(latLng.latitude, latLng.longitude), 16));
+
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setMessage(R.string.confirm_msg)
+                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                mAddBookmarkViewModel.saveBookmarkedLocation(lat + "," + lon);
+                            }
+                        })
+                        .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+
+                                map.clear();
+                            }
+                        });
+
+                builder.create().show();
+
+
 
             }
         });
@@ -187,14 +215,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 mFusedLocationProviderClient.getLastLocation().addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
                     @Override
                     public void onSuccess(Location location) {
-                        // Got last known location. In some rare situations this can be null.
-//                        LatLng sydney = new LatLng(-33.852, 151.211);
-//                        map.addMarker(new MarkerOptions().position(sydney)
-//                                .title("Marker in Sydney"));
-//                        map.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-//                        //new WeatherDataRepository(getContext()).saveBookmark("-33.852", "151.211");
-//                        mAddBookmarkViewModel = ViewModelProviders.of(getActivity()).get(AddBookmarkViewModel.class);
-//                        mAddBookmarkViewModel.saveBookmarkedLocation("-33.852", "151.211");
+
                         if (location != null) {
                             // Logic to handle location object
                             moveCamera(new LatLng(location.getLatitude(), location.getLongitude()),

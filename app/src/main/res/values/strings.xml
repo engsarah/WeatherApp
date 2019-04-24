@@ -4,5 +4,8 @@
     <string name="google_maps_api_key">AIzaSyDjPp8Ejka92Bec0sUnL5jCPMozEjl6Eg0</string>
     <string name="cityname">Brimingham</string>
     <string name="title_applabel">WeatherCamp</string>
+    <string name="confirm_msg">Are you sure you to add this location to bookmarks?</string>
+    <string name="yes">Yes</string>
+    <string name="no">Cancel</string>
 
 </resources>

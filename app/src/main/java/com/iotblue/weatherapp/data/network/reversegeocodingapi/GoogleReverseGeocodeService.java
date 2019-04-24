@@ -22,9 +22,15 @@ public class GoogleReverseGeocodeService {
 
                 if (response.isSuccessful() && response.body() != null) {
                     ReverseGeocodingResponse data = response.body();
-                    Bookmark bookmark = data.getResults().get(0).getGeometry().getBookmark();
-                    bookmark.setAddress(data.getResults().get(0).getFormattedAddress());
-                    reverseGeocodeCallback.onSuccess(bookmark);
+                    if (data.getResults().size() != 0) {
+                        Bookmark bookmark = data.getResults().get(0).getGeometry().getBookmark();
+                        bookmark.setAddress(data.getResults().get(0).getFormattedAddress());
+                        reverseGeocodeCallback.onSuccess(bookmark);
+                    } else {
+                        reverseGeocodeCallback.onError("Error while fetching data");
+                    }
+
+
                 } else {
 
                     reverseGeocodeCallback.onError("Error while fetching data");

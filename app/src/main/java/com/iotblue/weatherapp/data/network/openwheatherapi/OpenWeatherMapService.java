@@ -1,9 +1,12 @@
 package com.iotblue.weatherapp.data.network.openwheatherapi;
 
-import com.iotblue.weatherapp.data.domain.entities.Bookmark;
+import androidx.lifecycle.MutableLiveData;
+
 import com.iotblue.weatherapp.data.domain.entities.WeatherDetailsResponse;
+import com.iotblue.weatherapp.data.network.common.APIConstants;
 import com.iotblue.weatherapp.data.network.common.RetrofitClient;
-import com.iotblue.weatherapp.data.repository.OnBackendCallFinished;
+import com.iotblue.weatherapp.data.network.interceptors.OpenWeatherMapRequestInterceptor;
+import com.iotblue.weatherapp.data.repository.GetWeatherDataCallback;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -12,26 +15,21 @@ import retrofit2.Response;
 public class OpenWeatherMapService {
 
 
-    public void getWeatherDetails(String latitude, String longitude, final OnBackendCallFinished onBackendCallFinished) {
+    public MutableLiveData<WeatherDetailsResponse> getWeatherDetails(String latitude, String longitude, final GetWeatherDataCallback getWeatherDataCallback) {
 
-        RetrofitClient.getInstance().getGoogleAPI().getWeatherDetails(latitude, longitude).enqueue(new Callback<WeatherDetailsResponse>() {
+        final MutableLiveData<WeatherDetailsResponse> weatherDetailsResponse = new MutableLiveData<>();
+        RetrofitClient.getInstance(APIConstants.OPEN_WEATHER_MAP_BASE_URL, new OpenWeatherMapRequestInterceptor()).getWeatherData().getWeatherDetails(latitude, longitude).enqueue(new Callback<WeatherDetailsResponse>() {
             @Override
             public void onResponse(Call<WeatherDetailsResponse> call, Response<WeatherDetailsResponse> response) {
 
 
                 if (response.isSuccessful() && response.body() != null) {
                     WeatherDetailsResponse data = response.body();
-                    Bookmark bookmark = new Bookmark();
-                    bookmark.setCityName(data.getName());
-                    bookmark.setCityId(String.valueOf(data.getId()));
-                    bookmark.setCountryCode(String.valueOf(data.getCod()));
-                    bookmark.setIcon(data.getWeather().get(0).getIcon());
-                    bookmark.setMaxTemperature(String.valueOf(data.getMain().getTempMax()));
-                    bookmark.setDate(String.valueOf(data.getDt()));
-                    onBackendCallFinished.onSuccess(bookmark);
+                    weatherDetailsResponse.postValue(data);
+
                 } else {
 
-                    onBackendCallFinished.onError("Error while fetching data");
+                    getWeatherDataCallback.onError("Error while fetching data");
 
                 }
             }
@@ -41,6 +39,7 @@ public class OpenWeatherMapService {
 
             }
         });
+        return weatherDetailsResponse;
     }
 
 

@@ -1,5 +1,6 @@
 package com.iotblue.weatherapp.presentation.views;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,15 +18,18 @@ import com.iotblue.weatherapp.R;
 import com.iotblue.weatherapp.data.domain.entities.Bookmark;
 import com.iotblue.weatherapp.presentation.adapters.BookmarksListAdapter;
 import com.iotblue.weatherapp.presentation.viewmodels.BookmarksListViewModel;
+import com.iotblue.weatherapp.presentation.viewmodels.SharedViewModel;
 
 import java.util.List;
 
-public class BookmarksListFragment extends Fragment {
+public class BookmarksListFragment extends Fragment implements IOnItemClickListener {
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private BookmarksListViewModel mBookmarksListViewModel;
+    private SharedViewModel sharedViewModel;
+    private BookmarksListFragment.OnFragmentInteractionListener mListener;
 
     public static BookmarksListFragment newInstance() {
         return new BookmarksListFragment();
@@ -48,18 +52,56 @@ public class BookmarksListFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        sharedViewModel = ViewModelProviders.of(getActivity()).get(SharedViewModel.class);
         mBookmarksListViewModel = ViewModelProviders.of(this).get(BookmarksListViewModel.class);
-
         mBookmarksListViewModel.getAllBookmarks().observe(this, new Observer<List<Bookmark>>() {
             @Override
             public void onChanged(@Nullable List<Bookmark> bookmarkList) {
 
                 //setAdapter for recyclerview
-                mAdapter = new BookmarksListAdapter(bookmarkList, getActivity());
+                mAdapter = new BookmarksListAdapter(bookmarkList, getActivity(), BookmarksListFragment.this);
                 recyclerView.setAdapter(mAdapter);
 
             }
         });
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof BookmarksListFragment.OnFragmentInteractionListener) {
+            mListener = (BookmarksListFragment.OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+
+    @Override
+    public void onItemClick(View view, int position, Bookmark bookmark) {
+
+        sharedViewModel.select(bookmark);
+//        Bundle bundle = new Bundle();
+//        bundle.putString("lat",String.valueOf(bookmark.getLat()));
+//        bundle.putString("lng",String.valueOf(bookmark.getLat()));
+
+//        BookmarkDetailsFragment fragment = BookmarkDetailsFragment.newInstance();
+////        fragment.setArguments(bundle);
+//
+//        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//        fragmentTransaction.replace(R.id.viewpager, fragment);
+//        //fragmentTransaction.addToBackStack(null);
+//
+//        fragmentTransaction.commit();
+        mListener.onFragmentCallback();
+
+
+    }
+
+    public interface OnFragmentInteractionListener {
+
+        void onFragmentCallback();
+    }
 }

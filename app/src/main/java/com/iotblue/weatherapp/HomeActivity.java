@@ -3,7 +3,6 @@ package com.iotblue.weatherapp;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
@@ -12,9 +11,9 @@ import com.iotblue.weatherapp.presentation.views.BookmarkDetailsFragment;
 import com.iotblue.weatherapp.presentation.views.BookmarksListFragment;
 import com.iotblue.weatherapp.presentation.views.MapFragment;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements BookmarksListFragment.OnFragmentInteractionListener {
 
-    private Toolbar toolbar;
+
     private TabLayout tabLayout;
     private ViewPager viewPager;
 
@@ -39,4 +38,8 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onFragmentCallback() {
+        viewPager.setCurrentItem(3);
+    }
 }

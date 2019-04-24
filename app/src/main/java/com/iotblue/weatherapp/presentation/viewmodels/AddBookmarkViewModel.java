@@ -20,8 +20,8 @@ public class AddBookmarkViewModel extends AndroidViewModel {
         bookmarksRepository = new BookmarksDataRepository(application.getApplicationContext());
     }
 
-    public void saveBookmarkedLocation(String lat, String lon) {
-        bookmarksRepository.saveBookmark(lat, lon);
+    public void saveBookmarkedLocation(String latlng) {
+        bookmarksRepository.saveBookmark(latlng);
     }
 
     public MutableLiveData<Boolean> getIsLocationAdded() {

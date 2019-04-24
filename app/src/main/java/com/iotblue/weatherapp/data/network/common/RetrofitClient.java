@@ -1,8 +1,9 @@
 package com.iotblue.weatherapp.data.network.common;
 
-import com.iotblue.weatherapp.data.network.interceptors.OpenWeatherMapAPIRequestInterceptor;
 import com.iotblue.weatherapp.data.network.openwheatherapi.OpenWeatherMapAPI;
+import com.iotblue.weatherapp.data.network.reversegeocodingapi.GoogleReverseGeocodeAPI;
 
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -18,29 +19,33 @@ public class RetrofitClient {
     private static RetrofitClient mInstance;
     private Retrofit retrofit;
 
-    private RetrofitClient() {
+    private RetrofitClient(String baseUrl, Interceptor interceptor) {
 
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
-                .addInterceptor(new OpenWeatherMapAPIRequestInterceptor())
+                .addInterceptor(interceptor)
                 .addInterceptor(loggingInterceptor).build();
 
         retrofit = new Retrofit.Builder()
-                .baseUrl(APIConstants.OPEN_WEATHER_MAP_BASE_URL)
+                .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpClient)
                 .build();
     }
 
-    public static synchronized RetrofitClient getInstance() {
+    public static synchronized RetrofitClient getInstance(String baseUrl, Interceptor interceptor) {
         if (mInstance == null) {
-            mInstance = new RetrofitClient();
+            mInstance = new RetrofitClient(baseUrl, interceptor);
         }
         return mInstance;
     }
 
-    public OpenWeatherMapAPI getGoogleAPI() {
+    public OpenWeatherMapAPI getWeatherData() {
         return retrofit.create(OpenWeatherMapAPI.class);
+    }
+
+    public GoogleReverseGeocodeAPI getGoogleAPI() {
+        return retrofit.create(GoogleReverseGeocodeAPI.class);
     }
 }

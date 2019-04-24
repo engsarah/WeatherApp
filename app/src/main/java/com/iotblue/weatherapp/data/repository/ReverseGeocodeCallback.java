@@ -2,7 +2,7 @@ package com.iotblue.weatherapp.data.repository;
 
 import com.iotblue.weatherapp.data.domain.entities.Bookmark;
 
-public interface OnBackendCallFinished {
+public interface ReverseGeocodeCallback {
 
     void onSuccess(Bookmark bookmark);
 

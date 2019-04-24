@@ -110,7 +110,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 //moveCamera(new LatLng(LatLng, location.getLongitude()),
                 //b      Constants.DEFAULT_ZOOM, map);
 
-                mAddBookmarkViewModel.saveBookmarkedLocation(lat, lon);
+                mAddBookmarkViewModel.saveBookmarkedLocation(lat + "," + lon);
 
             }
         });
@@ -192,7 +192,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 //                        map.addMarker(new MarkerOptions().position(sydney)
 //                                .title("Marker in Sydney"));
 //                        map.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-//                        //new BookmarksDataRepository(getContext()).saveBookmark("-33.852", "151.211");
+//                        //new WeatherDataRepository(getContext()).saveBookmark("-33.852", "151.211");
 //                        mAddBookmarkViewModel = ViewModelProviders.of(getActivity()).get(AddBookmarkViewModel.class);
 //                        mAddBookmarkViewModel.saveBookmarkedLocation("-33.852", "151.211");
                         if (location != null) {

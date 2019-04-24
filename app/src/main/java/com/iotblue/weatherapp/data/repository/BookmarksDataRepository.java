@@ -9,13 +9,12 @@ import androidx.lifecycle.MutableLiveData;
 import com.iotblue.weatherapp.data.database.BookmarksDatabase;
 import com.iotblue.weatherapp.data.database.dao.BookmarksDao;
 import com.iotblue.weatherapp.data.domain.entities.Bookmark;
-import com.iotblue.weatherapp.data.network.openwheatherapi.OpenWeatherMapService;
 
 import java.util.List;
 
-public class BookmarksDataRepository implements BookmarksRepository, OnBackendCallFinished {
+public class BookmarksDataRepository implements BookmarksRepository, ReverseGeocodeCallback {
 
-    MutableLiveData<Boolean> isBookmarkSaver = new MutableLiveData<Boolean>();
+    MutableLiveData<Boolean> isBookmarkSaved = new MutableLiveData<Boolean>();
     private BookmarksDatabase db;
 
 
@@ -24,9 +23,28 @@ public class BookmarksDataRepository implements BookmarksRepository, OnBackendCa
     }
 
     @Override
-    public void saveBookmark(String lat, String lon) {
+    public void saveBookmark(String latlng) {
 
-        new OpenWeatherMapService().getWeatherDetails(lat, lon, this);
+        //new GoogleReverseGeocodeService().getLocationAddress(latlng, this);
+//        Bookmark b0 = new Bookmark();
+//        b0.setId(1);
+//        b0.setLat(40.714224);
+//        b0.setLng(-73.961452);
+//        b0.setAddress("277 Bedford Avenue, Brooklyn, NY 11211, USA");
+//        onSuccess(b0);
+//        Bookmark b01 = new Bookmark();
+//        b01.setId(2);
+//        b01.setLat(40.714224);
+//        b01.setLng(-73.961452);
+//        b01.setAddress("277 Bedford Avenue, Brooklyn, NY 11211, USA");
+//        onSuccess(b01);
+        Bookmark b02 = new Bookmark();
+        b02.setId(3);
+        b02.setLat(40.714224);
+        b02.setLng(-73.961452);
+        b02.setAddress("277 Bedford Avenue, Brooklyn, NY 11211, USA");
+        onSuccess(b02);
+
     }
 
     @Override
@@ -48,7 +66,7 @@ public class BookmarksDataRepository implements BookmarksRepository, OnBackendCa
 
     @Override
     public void onError(String error) {
-        isBookmarkSaver.setValue(false);
+        isBookmarkSaved.setValue(false);
     }
 
     private static class addBookmarkAsyncTask extends AsyncTask<Bookmark, Void, Void> {

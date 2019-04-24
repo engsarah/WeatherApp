@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface BookmarksRepository {
 
-    void saveBookmark(String lat, String lon);
+    void saveBookmark(String latlng);
 
     LiveData<List<Bookmark>> getAllBookmarks();
 

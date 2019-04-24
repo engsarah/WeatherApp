@@ -11,7 +11,7 @@ import com.iotblue.weatherapp.data.database.utils.DBConstants;
 import com.iotblue.weatherapp.data.domain.entities.Bookmark;
 
 
-@Database(entities = {Bookmark.class}, version = 1, exportSchema = false)
+@Database(entities = {Bookmark.class}, version = 2, exportSchema = false)
 public abstract class BookmarksDatabase extends RoomDatabase {
 
     private static BookmarksDatabase bookmarksDatabase;

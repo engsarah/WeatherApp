@@ -4,13 +4,13 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.iotblue.weatherapp.R;
 import com.iotblue.weatherapp.data.domain.entities.Bookmark;
+import com.iotblue.weatherapp.presentation.views.IOnItemClickListener;
 
 import java.util.List;
 
@@ -18,10 +18,12 @@ public class BookmarksListAdapter extends RecyclerView.Adapter<BookmarksListAdap
 
     List<Bookmark> bookmarks;
     Context mContext;
+    IOnItemClickListener iOnItemClickListener;
 
-    public BookmarksListAdapter(List<Bookmark> bookmarkList, Context mContext) {
+    public BookmarksListAdapter(List<Bookmark> bookmarkList, Context mContext, IOnItemClickListener iOnItemClickListener) {
         this.bookmarks = bookmarkList;
         this.mContext = mContext;
+        this.iOnItemClickListener = iOnItemClickListener;
     }
 
     // Create new views (invoked by the layout manager)
@@ -37,14 +39,24 @@ public class BookmarksListAdapter extends RecyclerView.Adapter<BookmarksListAdap
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(ItemViewHolder holder, int position) {
+    public void onBindViewHolder(ItemViewHolder holder, final int position) {
 
         final Bookmark bookmark = bookmarks.get(position);
-        holder.cityTxtVw.setText(bookmark.getCountryCode() + ", " + bookmark.getCityName());
-        holder.temperatureTxtVw.setText(bookmark.getMaxTemperature());
-        holder.updatedAtTxtVw.setText(bookmark.getDate());
-//        String url = character.getThumbnail().getPath() + "." + character.getThumbnail().getExtension();
-//        Glide.with(mContext).load(url).centerCrop().into(holder.weatherIcon);
+        holder.addressTxtVw.setText(bookmark.getAddress());
+        holder.addressTxtVw.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                iOnItemClickListener.onItemClick(v, position, bookmark);
+            }
+        });
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                iOnItemClickListener.onItemClick(v, position, bookmark);
+            }
+        });
+        //  String url = character.getThumbnail().getPath() + "." + character.getThumbnail().getExtension();
+        //  Glide.with(mContext).load(url).centerCrop().into(holder.weatherIcon);
 
     }
 
@@ -56,16 +68,12 @@ public class BookmarksListAdapter extends RecyclerView.Adapter<BookmarksListAdap
 
     public static class ItemViewHolder extends RecyclerView.ViewHolder {
 
-        TextView cityTxtVw, temperatureTxtVw, updatedAtTxtVw;
-        ImageView weatherIcon;
-
+        TextView addressTxtVw;
         public ItemViewHolder(View v) {
 
             super(v);
-            cityTxtVw = v.findViewById(R.id.location_name);
-            temperatureTxtVw = v.findViewById(R.id.temperature);
-            updatedAtTxtVw = v.findViewById(R.id.updatedAt);
-            weatherIcon = v.findViewById(R.id.icon);
+            addressTxtVw = v.findViewById(R.id.location_name);
+
 
         }
 
